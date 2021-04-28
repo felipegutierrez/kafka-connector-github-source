@@ -1,4 +1,5 @@
 
 target*
-config/GithubSourceConnector.properties
+
+config/GithubSourceConnector.*
 
