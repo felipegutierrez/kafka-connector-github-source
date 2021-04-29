@@ -48,7 +48,6 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
 
   public GitHubSourceConnectorConfig(Map<?, ?> originals) {
     super(config(), originals);
-    // this.mySetting = this.getString(TOPIC_CONFIG);
   }
 
   public static ConfigDef config() {

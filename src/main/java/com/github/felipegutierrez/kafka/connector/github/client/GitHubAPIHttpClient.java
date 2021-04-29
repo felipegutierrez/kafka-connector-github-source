@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 /**
- *  GitHubHttpAPIClient used to launch HTTP Get requests
+ * GitHubHttpAPIClient used to launch HTTP Get requests
  */
 public class GitHubAPIHttpClient {
 
@@ -89,6 +89,13 @@ public class GitHubAPIHttpClient {
         return unirest.asJson();
     }
 
+    /**
+     * Example of URL: https://api.github.com/repos/kubernetes/kubernetes/issues?page=15&per_page=2&since=2020-04-26T01:23:45Z&state=all&direction=asc&sort=updated
+     *
+     * @param page
+     * @param since
+     * @return
+     */
     public String constructUrl(Integer page, Instant since) {
         return String.format(
                 "https://api.github.com/repos/%s/%s/issues?page=%s&per_page=%s&since=%s&state=all&direction=asc&sort=updated",
