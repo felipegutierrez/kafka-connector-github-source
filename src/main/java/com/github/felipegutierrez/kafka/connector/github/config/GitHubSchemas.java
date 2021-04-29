@@ -12,8 +12,8 @@ public class GitHubSchemas {
     public static final String NEXT_PAGE_FIELD = "next_page";
 
     // Issue fields
-    public static final String OWNER_FIELD = "owner"; // does not exist
-    public static final String REPOSITORY_FIELD = "repository"; // repository_url
+    public static final String OWNER_FIELD = "owner"; // maps on GithubSourceTask
+    public static final String REPOSITORY_FIELD = "repository"; // maps on GithubSourceTask
     public static final String CREATED_AT_FIELD = "created_at";
     public static final String UPDATED_AT_FIELD = "updated_at";
     public static final String NUMBER_FIELD = "number";
