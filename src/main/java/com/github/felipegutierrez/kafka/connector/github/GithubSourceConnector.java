@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.github.felipegutierrez.kafka.connector.github.util.VersionUtil;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.SourceConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.jcustenborder.kafka.connect.utils.VersionUtil;
 import com.github.jcustenborder.kafka.connect.utils.config.Description;
 import com.github.jcustenborder.kafka.connect.utils.config.DocumentationImportant;
 import com.github.jcustenborder.kafka.connect.utils.config.DocumentationNote;
@@ -32,25 +32,24 @@ public class GithubSourceConnector extends SourceConnector {
 
   @Override
   public String version() {
-    return VersionUtil.version(this.getClass());
+    return VersionUtil.getVersion();
   }
 
   @Override
   public void start(Map<String, String> map) {
+    // DO: Add things you need to do to setup your connector.
     config = new GitHubSourceConnectorConfig(map);
-
-    //TODO: Add things you need to do to setup your connector.
   }
 
   @Override
   public Class<? extends Task> taskClass() {
-    //TODO: Return your task implementation.
+    // DO: Return your task implementation.
     return GithubSourceTask.class;
   }
 
   @Override
   public List<Map<String, String>> taskConfigs(int i) {
-    //TODO: Define the individual task configurations that will be executed.
+    // DO: Define the individual task configurations that will be executed.
     // throw new UnsupportedOperationException("This has not been implemented.");
     ArrayList<Map<String, String>> configs = new ArrayList<>(1);
     configs.add(config.originalsStrings());

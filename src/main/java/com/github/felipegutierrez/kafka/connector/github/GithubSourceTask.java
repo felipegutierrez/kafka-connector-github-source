@@ -5,7 +5,7 @@ import com.github.felipegutierrez.kafka.connector.github.model.Issue;
 import com.github.felipegutierrez.kafka.connector.github.model.PullRequest;
 import com.github.felipegutierrez.kafka.connector.github.model.User;
 import com.github.felipegutierrez.kafka.connector.github.util.DateUtils;
-import com.github.jcustenborder.kafka.connect.utils.VersionUtil;
+import com.github.felipegutierrez.kafka.connector.github.util.VersionUtil;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.apache.kafka.connect.source.SourceTask;
@@ -38,12 +38,12 @@ public class GithubSourceTask extends SourceTask {
 
     @Override
     public String version() {
-        return VersionUtil.version(this.getClass());
+        return VersionUtil.getVersion();
     }
 
     @Override
     public void start(Map<String, String> map) {
-        //TODO: Do things here that are required to start your task. This could be open a connection to a database, etc.
+        // DO: Do things here that are required to start your task. This could be open a connection to a database, etc.
         config = new GitHubSourceConnectorConfig(map);
         initializeLastVariables();
         gitHubHttpAPIClient = new GitHubAPIHttpClient(config);
@@ -126,7 +126,7 @@ public class GithubSourceTask extends SourceTask {
 
     @Override
     public List<SourceRecord> poll() throws InterruptedException {
-        //TODO: Create SourceRecord objects that will be sent the kafka cluster.
+        // DO: Create SourceRecord objects that will be sent the kafka cluster.
         // throw new UnsupportedOperationException("This has not been implemented.");
         gitHubHttpAPIClient.sleepIfNeed();
 

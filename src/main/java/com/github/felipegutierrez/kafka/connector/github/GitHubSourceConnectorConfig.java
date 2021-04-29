@@ -14,11 +14,11 @@ import java.util.Map;
 
 public class GitHubSourceConnectorConfig extends AbstractConfig {
 
-  // public static final String MY_SETTING_CONFIG = "my.setting";
-  // private static final String MY_SETTING_DOC = "This is a setting important to my connector.";
   public static final String TOPIC_CONFIG = "topic";
   public static final String GROUP_ID_CONFIG = "group.id";
-  // public static final String OFFSET_STORAGE_TOPIC_CONFIG = "offset.storage.topic";
+  public static final String OFFSET_STORAGE_TOPIC_CONFIG = "offset.storage.topic";
+  public static final String CONFIG_STORAGE_TOPIC_CONFIG = "config.storage.topic";
+  public static final String STATUS_STORAGE_TOPIC_CONFIG = "status.storage.topic";
   public static final String OWNER_CONFIG = "github.owner";
   public static final String REPO_CONFIG = "github.repo";
   public static final String SINCE_CONFIG = "since.timestamp";
@@ -32,6 +32,8 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
           "To support large Kafka Connect clusters, this topic should have a large number of partitions \n" +
           "(e.g. 25 or 50, just like Kafka’s built-in __consumer_offsets topic) and highly replicated (3x or more). \n" +
           "This topic should be compacted to avoid losing data due to retention policy.";
+  public static final String CONFIG_STORAGE_TOPIC_DOC = "";
+  public static final String STATUS_STORAGE_TOPIC_DOC = "";
   private static final String OWNER_DOC = "Owner of the repository you'd like to follow";
   private static final String REPO_DOC = "Repository you'd like to follow";
   private static final String SINCE_DOC =
@@ -42,24 +44,26 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
   private static final String AUTH_USERNAME_DOC = "Optional Username to authenticate calls";
   private static final String AUTH_PASSWORD_DOC = "Optional Password to authenticate calls";
 
-  public final String mySetting;
+  // public final String mySetting;
 
   public GitHubSourceConnectorConfig(Map<?, ?> originals) {
     super(config(), originals);
-    this.mySetting = this.getString(TOPIC_CONFIG);
+    // this.mySetting = this.getString(TOPIC_CONFIG);
   }
 
   public static ConfigDef config() {
     return new ConfigDef()
-        // .define(ConfigKeyBuilder.of(MY_SETTING_CONFIG, Type.STRING).documentation(MY_SETTING_DOC).importance(Importance.HIGH).build())
             .define(ConfigKeyBuilder.of(TOPIC_CONFIG, Type.STRING).importance(Importance.HIGH).documentation(TOPIC_DOC).build())
-            .define(ConfigKeyBuilder.of(GROUP_ID_CONFIG, Type.STRING).importance(Importance.HIGH).documentation(GROUP_ID_DOC).build())
+            .define(ConfigKeyBuilder.of(GROUP_ID_CONFIG, Type.STRING).importance(Importance.HIGH).defaultValue("1").documentation(GROUP_ID_DOC).build())
             .define(ConfigKeyBuilder.of(OWNER_CONFIG, Type.STRING).importance(Importance.HIGH).documentation( OWNER_DOC).build())
             .define(ConfigKeyBuilder.of(REPO_CONFIG, Type.STRING).importance(Importance.HIGH).documentation( REPO_DOC).build())
             .define(ConfigKeyBuilder.of(BATCH_SIZE_CONFIG, Type.INT).importance(Importance.HIGH).defaultValue(100).validator(new BatchSizeValidator()).documentation(BATCH_SIZE_DOC).build())
             .define(ConfigKeyBuilder.of(SINCE_CONFIG, Type.STRING).importance(Importance.HIGH).defaultValue(ZonedDateTime.now().minusYears(1).toInstant().toString()).validator(new TimestampValidator()).documentation(SINCE_DOC).build())
             .define(ConfigKeyBuilder.of(AUTH_USERNAME_CONFIG, Type.STRING).importance(Importance.HIGH).defaultValue("").documentation(AUTH_USERNAME_DOC).build())
-            .define(ConfigKeyBuilder.of(AUTH_PASSWORD_CONFIG, Type.PASSWORD).importance(Importance.HIGH).defaultValue("").documentation(AUTH_PASSWORD_DOC).build());
+            .define(ConfigKeyBuilder.of(AUTH_PASSWORD_CONFIG, Type.PASSWORD).importance(Importance.HIGH).defaultValue("").documentation(AUTH_PASSWORD_DOC).build())
+            .define(ConfigKeyBuilder.of(OFFSET_STORAGE_TOPIC_CONFIG, Type.STRING).importance(Importance.HIGH).defaultValue("connect-offsets").documentation(OFFSET_STORAGE_TOPIC_DOC).build())
+            .define(ConfigKeyBuilder.of(CONFIG_STORAGE_TOPIC_CONFIG, Type.STRING).importance(Importance.HIGH).defaultValue("connect-configs").documentation(CONFIG_STORAGE_TOPIC_DOC).build())
+            .define(ConfigKeyBuilder.of(STATUS_STORAGE_TOPIC_CONFIG, Type.STRING).importance(Importance.HIGH).defaultValue("connect-status").documentation(STATUS_STORAGE_TOPIC_DOC).build());
   }
 
   public String getOwnerConfig() {

@@ -30,13 +30,8 @@ docker-compose up -d
 vi confluent-6.1.1/etc/schema-registry/connect-avro-distributed.properties
 plugin.path=share/java,/home/felipe/workspace-idea/kafka-connect-twitter/,/home/felipe/confluent-6.1.1/share/confluent-hub-components,/home/felipe/workspace-idea/kafka-connector-github-source/
 
-# config.storage.topic=connect-configs
-kafka-topics --create --bootstrap-server localhost:9092 --topic connect-configs --replication-factor 3 --partitions 1 --config cleanup.policy=compact
-# offset.storage.topic=connect-offsets
-kafka-topics --create --bootstrap-server localhost:9092 --topic connect-offsets --replication-factor 3 --partitions 50 --config cleanup.policy=compact
-# status.storage.topic=connect-status
-kafka-topics --create --bootstrap-server localhost:9092 --topic connect-status --replication-factor 3 --partitions 10 --config cleanup.policy=compact
-
+cp config/GithubSourceConnector.properties /tmp/GithubSourceConnector.properties
+vi /tmp/GithubSourceConnector.properties
 connect-distributed config/worker.properties config/GithubSourceConnector.properties
 ```
 
@@ -90,6 +85,5 @@ Examples are taken from here: http://docs.confluent.io/3.2.0/connect/managing.ht
 - [https://github.com/jcustenborder/kafka-connect-archtype](https://github.com/jcustenborder/kafka-connect-archtype)
 - [https://www.confluent.io/blog/create-dynamic-kafka-connect-source-connectors/](https://www.confluent.io/blog/create-dynamic-kafka-connect-source-connectors/)
 - [https://medium.com/@gowdasunil15/building-custom-connector-for-kafka-connect-c163a7ed84c2](https://medium.com/@gowdasunil15/building-custom-connector-for-kafka-connect-c163a7ed84c2)
-- [https://www.confluent.io/blog/using-ksql-to-analyse-query-and-transform-data-in-kafka/](https://www.confluent.io/blog/using-ksql-to-analyse-query-and-transform-data-in-kafka/)
 - [https://docs.confluent.io/home/connect/userguide.html](https://docs.confluent.io/home/connect/userguide.html)
 
