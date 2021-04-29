@@ -110,7 +110,8 @@ public class GithubSourceTask extends SourceTask {
         Struct userStruct = new Struct(USER_SCHEMA)
                 .put(USER_URL_FIELD, user.getUrl())
                 .put(USER_ID_FIELD, user.getId())
-                .put(USER_LOGIN_FIELD, user.getLogin());
+                .put(USER_LOGIN_FIELD, user.getLogin())
+                .put(USER_HTML_URL_FIELD, user.getHtmlUrl());
         valueStruct.put(USER_FIELD, userStruct);
 
         // Pull request is optional

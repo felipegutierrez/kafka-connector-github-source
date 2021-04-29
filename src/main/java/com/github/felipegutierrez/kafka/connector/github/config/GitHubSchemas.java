@@ -12,8 +12,8 @@ public class GitHubSchemas {
     public static final String NEXT_PAGE_FIELD = "next_page";
 
     // Issue fields
-    public static final String OWNER_FIELD = "owner";
-    public static final String REPOSITORY_FIELD = "repository";
+    public static final String OWNER_FIELD = "owner"; // does not exist
+    public static final String REPOSITORY_FIELD = "repository"; // repository_url
     public static final String CREATED_AT_FIELD = "created_at";
     public static final String UPDATED_AT_FIELD = "updated_at";
     public static final String NUMBER_FIELD = "number";
@@ -35,10 +35,10 @@ public class GitHubSchemas {
     public static final String PR_HTML_URL_FIELD = "html_url";
 
     // Schema names
-    public static final String SCHEMA_KEY = "com.simplesteph.kafka.connect.github.IssueKey";
-    public static final String SCHEMA_VALUE_ISSUE = "com.simplesteph.kafka.connect.github.IssueValue";
-    public static final String SCHEMA_VALUE_USER = "com.simplesteph.kafka.connect.github.UserValue";
-    public static final String SCHEMA_VALUE_PR = "com.simplesteph.kafka.connect.github.PrValue";
+    public static final String SCHEMA_KEY = "IssueKey";
+    public static final String SCHEMA_VALUE_ISSUE = "IssueValue";
+    public static final String SCHEMA_VALUE_USER = "UserValue";
+    public static final String SCHEMA_VALUE_PR = "PrValue";
 
     // Key Schema
     public static final Schema KEY_SCHEMA = SchemaBuilder.struct().name(SCHEMA_KEY)
@@ -54,6 +54,7 @@ public class GitHubSchemas {
             .field(USER_URL_FIELD, Schema.STRING_SCHEMA)
             .field(USER_ID_FIELD, Schema.INT32_SCHEMA)
             .field(USER_LOGIN_FIELD, Schema.STRING_SCHEMA)
+            .field(USER_HTML_URL_FIELD, Schema.STRING_SCHEMA)
             .build();
 
     // optional schema

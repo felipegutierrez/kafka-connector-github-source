@@ -23,46 +23,46 @@ import com.github.jcustenborder.kafka.connect.utils.config.Title;
 @Title("Github Source Connector") //This is the display name that will show up in the documentation.
 @DocumentationNote("This is a note that will show up in the documentation")
 public class GithubSourceConnector extends SourceConnector {
-  /*
-    Your connector should never use System.out for logging. All of your classes should use slf4j
-    for logging
- */
-  private static Logger log = LoggerFactory.getLogger(GithubSourceConnector.class);
-  private GitHubSourceConnectorConfig config;
+    /*
+      Your connector should never use System.out for logging. All of your classes should use slf4j
+      for logging
+   */
+    private static Logger log = LoggerFactory.getLogger(GithubSourceConnector.class);
+    private GitHubSourceConnectorConfig config;
 
-  @Override
-  public String version() {
-    return VersionUtil.getVersion();
-  }
+    @Override
+    public String version() {
+        return VersionUtil.getVersion();
+    }
 
-  @Override
-  public void start(Map<String, String> map) {
-    // DO: Add things you need to do to setup your connector.
-    config = new GitHubSourceConnectorConfig(map);
-  }
+    @Override
+    public void start(Map<String, String> map) {
+        // Add things you need to do to setup your connector.
+        config = new GitHubSourceConnectorConfig(map);
+    }
 
-  @Override
-  public Class<? extends Task> taskClass() {
-    // DO: Return your task implementation.
-    return GithubSourceTask.class;
-  }
+    @Override
+    public Class<? extends Task> taskClass() {
+        // Return your task implementation.
+        return GithubSourceTask.class;
+    }
 
-  @Override
-  public List<Map<String, String>> taskConfigs(int i) {
-    // DO: Define the individual task configurations that will be executed.
-    // throw new UnsupportedOperationException("This has not been implemented.");
-    ArrayList<Map<String, String>> configs = new ArrayList<>(1);
-    configs.add(config.originalsStrings());
-    return configs;
-  }
+    @Override
+    public List<Map<String, String>> taskConfigs(int parallelism) {
+        // Define the individual task configurations that will be executed.
+        // throw new UnsupportedOperationException("This has not been implemented.");
+        ArrayList<Map<String, String>> configs = new ArrayList<>(1);
+        configs.add(config.originalsStrings());
+        return configs;
+    }
 
-  @Override
-  public void stop() {
-    //TODO: Do things that are necessary to stop your connector.
-  }
+    @Override
+    public void stop() {
+        //TODO: Do things that are necessary to stop your connector.
+    }
 
-  @Override
-  public ConfigDef config() {
-    return GitHubSourceConnectorConfig.config();
-  }
+    @Override
+    public ConfigDef config() {
+        return GitHubSourceConnectorConfig.config();
+    }
 }

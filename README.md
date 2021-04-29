@@ -86,4 +86,6 @@ Examples are taken from here: http://docs.confluent.io/3.2.0/connect/managing.ht
 - [https://www.confluent.io/blog/create-dynamic-kafka-connect-source-connectors/](https://www.confluent.io/blog/create-dynamic-kafka-connect-source-connectors/)
 - [https://medium.com/@gowdasunil15/building-custom-connector-for-kafka-connect-c163a7ed84c2](https://medium.com/@gowdasunil15/building-custom-connector-for-kafka-connect-c163a7ed84c2)
 - [https://docs.confluent.io/home/connect/userguide.html](https://docs.confluent.io/home/connect/userguide.html)
+- [https://docs.github.com/en/rest/reference/issues#list-repository-issues](https://docs.github.com/en/rest/reference/issues#list-repository-issues)
+- [https://api.github.com/repos/kubernetes/kubernetes/issues](https://api.github.com/repos/kubernetes/kubernetes/issues)
 
