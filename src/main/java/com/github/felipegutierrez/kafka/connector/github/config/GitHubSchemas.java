@@ -35,18 +35,10 @@ public class GitHubSchemas {
     public static final String PR_HTML_URL_FIELD = "html_url";
 
     // Schema names
-    public static final String SCHEMA_KEY = "IssueKey";
-    public static final String SCHEMA_VALUE_ISSUE = "IssueValue";
+    public static final String SCHEMA_KEY = "schema";
+    public static final String SCHEMA_VALUE_ISSUE = "payload";
     public static final String SCHEMA_VALUE_USER = "UserValue";
     public static final String SCHEMA_VALUE_PR = "PrValue";
-
-    // Key Schema
-    public static final Schema KEY_SCHEMA = SchemaBuilder.struct().name(SCHEMA_KEY)
-            .version(1)
-            .field(OWNER_FIELD, Schema.STRING_SCHEMA)
-            .field(REPOSITORY_FIELD, Schema.STRING_SCHEMA)
-            .field(NUMBER_FIELD, Schema.INT32_SCHEMA)
-            .build();
 
     // Value Schema
     public static final Schema USER_SCHEMA = SchemaBuilder.struct().name(SCHEMA_VALUE_USER)
@@ -65,7 +57,16 @@ public class GitHubSchemas {
             .optional()
             .build();
 
-    public static final Schema VALUE_SCHEMA = SchemaBuilder.struct().name(SCHEMA_VALUE_ISSUE)
+    // Key Schema
+    public static final Schema SCHEMA_KEY_STRUCT = SchemaBuilder.struct().name(SCHEMA_KEY)
+            .version(1)
+            .field(OWNER_FIELD, Schema.STRING_SCHEMA)
+            .field(REPOSITORY_FIELD, Schema.STRING_SCHEMA)
+            .field(NUMBER_FIELD, Schema.INT32_SCHEMA)
+            .build();
+
+    // Payload Schema
+    public static final Schema SCHEMA_PAYLOAD_STRUCT = SchemaBuilder.struct().name(SCHEMA_VALUE_ISSUE)
             .version(2)
             .field(URL_FIELD, Schema.STRING_SCHEMA)
             .field(TITLE_FIELD, Schema.STRING_SCHEMA)

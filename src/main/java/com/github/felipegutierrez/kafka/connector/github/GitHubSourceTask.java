@@ -89,18 +89,17 @@ public class GitHubSourceTask extends SourceTask {
         return map;
     }
 
-    private Struct buildRecordKey(Issue issue) {
+    public Struct buildRecordKey(Issue issue) {
         // Key Schema
-        Struct key = new Struct(KEY_SCHEMA)
+        return new Struct(SCHEMA_KEY_STRUCT)
                 .put(OWNER_FIELD, config.getOwnerConfig())
                 .put(REPOSITORY_FIELD, config.getRepoConfig())
                 .put(NUMBER_FIELD, issue.getNumber());
-        return key;
     }
 
     public Struct buildRecordValue(Issue issue) {
         // Issue top level fields
-        Struct valueStruct = new Struct(VALUE_SCHEMA)
+        Struct valueStruct = new Struct(SCHEMA_PAYLOAD_STRUCT)
                 .put(URL_FIELD, issue.getUrl())
                 .put(TITLE_FIELD, issue.getTitle())
                 .put(CREATED_AT_FIELD, Date.from(issue.getCreatedAt()))
@@ -141,7 +140,15 @@ public class GitHubSourceTask extends SourceTask {
         int i = 0;
         for (Object obj : issues) {
             Issue issue = Issue.fromJson((JSONObject) obj);
+            log.info("..................................................................");
+            log.info("..................................................................");
+            log.info("..................................................................");
+            log.info("POLLING RECORD ISSUE: " + issue);
             SourceRecord sourceRecord = generateSourceRecord(issue);
+            log.info("..................................................................");
+            log.info("..................................................................");
+            log.info("..................................................................");
+            log.info("GENERATED SOURCE RECORD: " + sourceRecord);
             records.add(sourceRecord);
             i += 1;
             lastUpdatedAt = issue.getUpdatedAt();
@@ -181,9 +188,9 @@ public class GitHubSourceTask extends SourceTask {
                 sourceOffset(issue.getUpdatedAt()),
                 config.getTopic(),
                 null, // partition will be inferred by the framework
-                KEY_SCHEMA,
+                SCHEMA_KEY_STRUCT,
                 buildRecordKey(issue),
-                VALUE_SCHEMA,
+                SCHEMA_PAYLOAD_STRUCT,
                 buildRecordValue(issue),
                 issue.getUpdatedAt().toEpochMilli());
     }

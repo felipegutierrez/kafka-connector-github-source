@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.kafka.connector.github.model;
 
+import com.github.felipegutierrez.kafka.connector.github.GitHubSourceConnectorConfig;
 import com.github.felipegutierrez.kafka.connector.github.GitHubSourceTask;
 import com.github.felipegutierrez.kafka.connector.github.config.GitHubSchemas;
 import org.apache.kafka.connect.data.Struct;
@@ -7,7 +8,10 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import static com.github.felipegutierrez.kafka.connector.github.GitHubSourceConnectorConfig.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -115,11 +119,32 @@ public class IssueTest {
 
     }
 
+    private Map<String, String> initialConfig() {
+        Map<String, String> baseProps = new HashMap<>();
+        baseProps.put(OWNER_CONFIG, "apache");
+        baseProps.put(REPO_CONFIG, "kafka");
+        baseProps.put(SINCE_CONFIG, "2017-04-26T01:23:44Z");
+        baseProps.put(BATCH_SIZE_CONFIG, "2");
+        baseProps.put(TOPIC_CONFIG, "github-issues");
+        return baseProps;
+    }
+
     @Test
-    public void convertsToStruct() {
+    public void convertsToStructKey() {
+        // issue
+        Issue issue = Issue.fromJson(issueJson);
+        GitHubSourceTask gitHubSourceTask = new GitHubSourceTask();
+        gitHubSourceTask.config = new GitHubSourceConnectorConfig(initialConfig());
+        Struct struct = gitHubSourceTask.buildRecordKey(issue);
+        assertEquals(struct.schema().name(), "schema");
+    }
+
+    @Test
+    public void convertsToStructValue() {
         // issue
         Issue issue = Issue.fromJson(issueJson);
         Struct struct = new GitHubSourceTask().buildRecordValue(issue);
+        assertEquals(struct.schema().name(), "payload");
         assertEquals(struct.get(GitHubSchemas.CREATED_AT_FIELD).getClass(), Date.class);
     }
 
