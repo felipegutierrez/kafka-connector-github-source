@@ -1,6 +1,6 @@
 package com.github.felipegutierrez.kafka.connector.github.model;
 
-import com.github.felipegutierrez.kafka.connector.github.GithubSourceTask;
+import com.github.felipegutierrez.kafka.connector.github.GitHubSourceTask;
 import com.github.felipegutierrez.kafka.connector.github.config.GitHubSchemas;
 import org.apache.kafka.connect.data.Struct;
 import org.json.JSONObject;
@@ -119,7 +119,7 @@ public class IssueTest {
     public void convertsToStruct() {
         // issue
         Issue issue = Issue.fromJson(issueJson);
-        Struct struct = new GithubSourceTask().buildRecordValue(issue);
+        Struct struct = new GitHubSourceTask().buildRecordValue(issue);
         assertEquals(struct.get(GitHubSchemas.CREATED_AT_FIELD).getClass(), Date.class);
     }
 

@@ -22,12 +22,12 @@ import com.github.jcustenborder.kafka.connect.utils.config.Title;
 @DocumentationTip("This is a tip that will show up in the documentation.")
 @Title("Github Source Connector") //This is the display name that will show up in the documentation.
 @DocumentationNote("This is a note that will show up in the documentation")
-public class GithubSourceConnector extends SourceConnector {
+public class GitHubSourceConnector extends SourceConnector {
     /*
       Your connector should never use System.out for logging. All of your classes should use slf4j
       for logging
    */
-    private static Logger log = LoggerFactory.getLogger(GithubSourceConnector.class);
+    private static Logger log = LoggerFactory.getLogger(GitHubSourceConnector.class);
     private GitHubSourceConnectorConfig config;
 
     @Override
@@ -44,7 +44,7 @@ public class GithubSourceConnector extends SourceConnector {
     @Override
     public Class<? extends Task> taskClass() {
         // Return your task implementation.
-        return GithubSourceTask.class;
+        return GitHubSourceTask.class;
     }
 
     @Override

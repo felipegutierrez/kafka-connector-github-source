@@ -19,12 +19,12 @@ import java.util.*;
 
 import static com.github.felipegutierrez.kafka.connector.github.config.GitHubSchemas.*;
 
-public class GithubSourceTask extends SourceTask {
+public class GitHubSourceTask extends SourceTask {
     /*
       Your connector should never use System.out for logging. All of your classes should use slf4j
       for logging
    */
-    static final Logger log = LoggerFactory.getLogger(GithubSourceTask.class);
+    static final Logger log = LoggerFactory.getLogger(GitHubSourceTask.class);
 
     public GitHubSourceConnectorConfig config;
 
@@ -49,6 +49,9 @@ public class GithubSourceTask extends SourceTask {
         gitHubHttpAPIClient = new GitHubAPIHttpClient(config);
     }
 
+    /**
+     * This method finds until up to which point the source connector must resume messages
+     */
     private void initializeLastVariables() {
         Map<String, Object> lastSourceOffset = null;
         lastSourceOffset = context.offsetStorageReader().offset(sourcePartition());
