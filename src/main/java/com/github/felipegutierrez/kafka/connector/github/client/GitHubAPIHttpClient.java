@@ -21,9 +21,9 @@ import java.time.ZoneOffset;
  */
 public class GitHubAPIHttpClient {
 
-    public static final String X_RATELIMIT_LIMIT_HEADER = "X-Ratelimit-Limit";
-    public static final String X_RATELIMIT_REMAINING_HEADER = "X-Ratelimit-Remaining";
-    public static final String X_RATELIMIT_RESET_HEADER = "X-Ratelimit-Reset";
+    public static final String X_RATELIMIT_LIMIT_HEADER = "X-RateLimit-Limit";
+    public static final String X_RATELIMIT_REMAINING_HEADER = "X-RateLimit-Remaining";
+    public static final String X_RATELIMIT_RESET_HEADER = "X-RateLimit-Reset";
     private static final Logger log = LoggerFactory.getLogger(GitHubAPIHttpClient.class);
     public GitHubSourceConnectorConfig config;
     // for efficient http requests
