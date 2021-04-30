@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.github.felipegutierrez.kafka.connector.github.GitHubSourceConnectorConfig.*;
+import static com.github.felipegutierrez.kafka.connector.github.config.GitHubSchemas.SCHEMA_PAYLOAD_STRUCT_NAME;
+import static com.github.felipegutierrez.kafka.connector.github.config.GitHubSchemas.STATUS_SCHEMA_KEY_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -136,7 +138,7 @@ public class IssueTest {
         GitHubSourceTask gitHubSourceTask = new GitHubSourceTask();
         gitHubSourceTask.config = new GitHubSourceConnectorConfig(initialConfig());
         Struct struct = gitHubSourceTask.buildRecordKey(issue);
-        assertEquals(struct.schema().name(), "schema");
+        assertEquals(struct.schema().name(), STATUS_SCHEMA_KEY_NAME);
     }
 
     @Test
@@ -144,7 +146,7 @@ public class IssueTest {
         // issue
         Issue issue = Issue.fromJson(issueJson);
         Struct struct = new GitHubSourceTask().buildRecordValue(issue);
-        assertEquals(struct.schema().name(), "payload");
+        assertEquals(struct.schema().name(), SCHEMA_PAYLOAD_STRUCT_NAME);
         assertEquals(struct.get(GitHubSchemas.CREATED_AT_FIELD).getClass(), Date.class);
     }
 

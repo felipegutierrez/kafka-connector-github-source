@@ -35,8 +35,8 @@ public class GitHubSchemas {
     public static final String PR_HTML_URL_FIELD = "html_url";
 
     // Schema names
-    public static final String SCHEMA_KEY = "schema";
-    public static final String SCHEMA_VALUE_ISSUE = "payload";
+    public static final String STATUS_SCHEMA_KEY_NAME = "com.github.felipegutierrez.kafka.connector.github.StatusKey";
+    public static final String SCHEMA_PAYLOAD_STRUCT_NAME = "com.github.felipegutierrez.kafka.connector.github.Status";
     public static final String SCHEMA_VALUE_USER = "UserValue";
     public static final String SCHEMA_VALUE_PR = "PrValue";
 
@@ -58,16 +58,16 @@ public class GitHubSchemas {
             .build();
 
     // Key Schema
-    public static final Schema SCHEMA_KEY_STRUCT = SchemaBuilder.struct().name(SCHEMA_KEY)
-            .version(1)
-            .field(OWNER_FIELD, Schema.STRING_SCHEMA)
-            .field(REPOSITORY_FIELD, Schema.STRING_SCHEMA)
-            .field(NUMBER_FIELD, Schema.INT32_SCHEMA)
+    public static final Schema STATUS_SCHEMA_KEY = SchemaBuilder.struct().name(STATUS_SCHEMA_KEY_NAME)
+            .doc("key for github status")
+            .field(OWNER_FIELD, Schema.OPTIONAL_STRING_SCHEMA)
+            .field(REPOSITORY_FIELD, Schema.OPTIONAL_STRING_SCHEMA)
+            .field(NUMBER_FIELD, Schema.OPTIONAL_INT32_SCHEMA)
             .build();
 
     // Payload Schema
-    public static final Schema SCHEMA_PAYLOAD_STRUCT = SchemaBuilder.struct().name(SCHEMA_VALUE_ISSUE)
-            .version(2)
+    public static final Schema SCHEMA_PAYLOAD_STRUCT = SchemaBuilder.struct().name(SCHEMA_PAYLOAD_STRUCT_NAME)
+            .doc("GitHub status message.")
             .field(URL_FIELD, Schema.STRING_SCHEMA)
             .field(TITLE_FIELD, Schema.STRING_SCHEMA)
             .field(CREATED_AT_FIELD, Timestamp.SCHEMA)

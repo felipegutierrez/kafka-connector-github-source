@@ -1,0 +1,14 @@
+{
+  "name": "GitHubSourceConnectorConnectorDemo",
+  "connector.class": "com.github.felipegutierrez.kafka.connector.github.GitHubSourceConnector",
+  "tasks.max": "1",
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "topic": "github-issues",
+  "github.owner": "kubernetes",
+  "github.repo": "kubernetes",
+  "batch.size": "2",
+  "since.timestamp": "2021-01-01T00:00:00Z",
+  "auth.username": "USERNAME",
+  "auth.password": "PASSWORD"
+}

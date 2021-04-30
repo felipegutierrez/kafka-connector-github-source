@@ -91,7 +91,7 @@ public class GitHubSourceTask extends SourceTask {
 
     public Struct buildRecordKey(Issue issue) {
         // Key Schema
-        return new Struct(SCHEMA_KEY_STRUCT)
+        return new Struct(STATUS_SCHEMA_KEY)
                 .put(OWNER_FIELD, config.getOwnerConfig())
                 .put(REPOSITORY_FIELD, config.getRepoConfig())
                 .put(NUMBER_FIELD, issue.getNumber());
@@ -183,12 +183,20 @@ public class GitHubSourceTask extends SourceTask {
      * @see GitHubAPIHttpClient
      */
     private SourceRecord generateSourceRecord(Issue issue) {
+        // SourceRecord record = new SourceRecord(
+        // sourcePartition,
+        // sourceOffset,
+        // this.config.topic,
+        // StatusConverter.STATUS_SCHEMA_KEY,
+        // keyStruct,
+        // StatusConverter.STATUS_SCHEMA,
+        // valueStruct);
         return new SourceRecord(
                 sourcePartition(),
                 sourceOffset(issue.getUpdatedAt()),
                 config.getTopic(),
                 null, // partition will be inferred by the framework
-                SCHEMA_KEY_STRUCT,
+                STATUS_SCHEMA_KEY,
                 buildRecordKey(issue),
                 SCHEMA_PAYLOAD_STRUCT,
                 buildRecordValue(issue),

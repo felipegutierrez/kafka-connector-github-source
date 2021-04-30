@@ -1,27 +1,8 @@
-# Introduction
+# GitHub source connector to Kafka
 
-Welcome to your new Kafka Connect plugin!
+Welcome to your new GitHub Kafka Connect source created using the archtype [https://github.com/jcustenborder/kafka-connect-archtype](https://github.com/jcustenborder/kafka-connect-archtype).
 
-# Running in development
-
-
-The [docker-compose.yml](docker-compose.yml) that is included in this repository is based on the Confluent Platform Docker
-images. Take a look at the [quickstart](http://docs.confluent.io/current/cp-docker-images/docs/quickstart.html#getting-started-with-docker-client)
-for the Docker images. 
-
-Your development workstation needs to be able to resolve the hostnames that are listed in the `docker-compose.yml` 
-file in the root of this repository. If you are using [Docker for Mac](https://docs.docker.com/v17.12/docker-for-mac/install/)
-your containers will be available at the ip address `127.0.0.1`. If you are running docker-machine
-you will need to determine the ip address of the virtual machine with `docker-machine ip confluent`
-to determine the ip address.
-
-```
-127.0.0.1 zookeeper
-127.0.0.1 kafka
-127.0.0.1 schema-registry
-```
-
-Package the project:
+## Package the project
 ```
 mvn clean package
 cd target
@@ -32,45 +13,34 @@ drwxrwxr-x  3 felipe felipe     4096 Apr 30 11:10 etc/
 drwxrwxr-x  3 felipe felipe     4096 Apr 30 11:10 usr/
 ...
 ```
-
-```
-cp config/GithubSourceConnector.properties /tmp/GithubSourceConnector.properties
-vi /tmp/GithubSourceConnector.properties
-```
-
+Configure the GitHub Source Kafka source connector on the confluent platform
 ```
 vi confluent-6.1.1/etc/schema-registry/connect-avro-distributed.properties
-plugin.path=share/java,/home/felipe/workspace-idea/kafka-connect-twitter/,\
-    /home/felipe/confluent-6.1.1/share/confluent-hub-components,\
-    /home/felipe/workspace-idea/kafka-connector-github-source/
+plugin.path=share/java,/home/felipe/workspace-idea/kafka-connector-github-source/
 ```
-Start the Confluent platform `confluent local services start` and access it on [http://127.0.0.1:9021/](http://127.0.0.1:9021/).
+## Running
+Start the Confluent platform `confluent local services start` and access it on [http://127.0.0.1:9021/](http://127.0.0.1:9021/) and create a GitHub source connector using:
+```
+{
+  "name": "GitHubSourceConnectorConnectorDemo",
+  "connector.class": "com.github.felipegutierrez.kafka.connector.github.GitHubSourceConnector",
+  "tasks.max": "1",
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "topic": "github-issues",
+  "github.owner": "kubernetes",
+  "github.repo": "kubernetes",
+  "batch.size": "2",
+  "since.timestamp": "2021-01-01T00:00:00Z",
+  "auth.username": "USERNAME",
+  "auth.password": "PASSWORD"
+}
+```
+Consume data using:
+```
+kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic github-issues | jq
+```
 
-```
-connect-distributed config/worker.properties /tmp/GithubSourceConnector.properties
-```
-
-```
-docker-compose up -d
-```
-
-
-The debug script assumes that `connect-standalone` is in the path on your local workstation. Download 
-the latest version of the [Kafka](https://www.confluent.io/download/) to get started.
-
-
-Start the connector with debugging enabled.
- 
-```
-./bin/debug.sh
-```
-
-Start the connector with debugging enabled. This will wait for a debugger to attach.
-
-```
-export SUSPEND='y'
-./bin/debug.sh
-```
 
 ### Rest API:
 Examples are taken from here: http://docs.confluent.io/3.2.0/connect/managing.html#common-rest-examples . Replace 127.0.0.1 by 192.168.99.100 if you're using docker toolbox
@@ -84,7 +54,7 @@ Examples are taken from here: http://docs.confluent.io/3.2.0/connect/managing.ht
   `curl -s 127.0.0.1:8083/connectors/source-twitter-distributed/tasks | jq`
 - Get Connector Status
   `curl -s 127.0.0.1:8083/connectors/file-stream-demo-distributed/status | jq`
-- Pause / Resume a Connector (no response if the call is succesful)
+- Pause / Resume a Connector (no response if the call is successful)
   `curl -s -X PUT 127.0.0.1:8083/connectors/file-stream-demo-distributed/pause`
   `curl -s -X PUT 127.0.0.1:8083/connectors/file-stream-demo-distributed/resume`
 - Get Connector Configuration
@@ -108,5 +78,6 @@ Examples are taken from here: http://docs.confluent.io/3.2.0/connect/managing.ht
 - [https://docs.github.com/en/rest/reference/issues#list-repository-issues](https://docs.github.com/en/rest/reference/issues#list-repository-issues)
 - [https://api.github.com/repos/kubernetes/kubernetes/issues](https://api.github.com/repos/kubernetes/kubernetes/issues)
 - [https://www.confluent.io/blog/using-ksql-to-analyse-query-and-transform-data-in-kafka/](https://www.confluent.io/blog/using-ksql-to-analyse-query-and-transform-data-in-kafka/)
+- [https://github.com/jcustenborder/kafka-connect-twitter](https://github.com/jcustenborder/kafka-connect-twitter)
 
 
