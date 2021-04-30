@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/felipegutierrez/kafka-connector-github-source/actions/workflows/maven.yml/badge.svg)](https://github.com/felipegutierrez/kafka-connector-github-source/actions/workflows/maven.yml)
+
 # GitHub source connector to Kafka
 
 Welcome to your new GitHub Kafka Connect source created using the archtype [https://github.com/jcustenborder/kafka-connect-archtype](https://github.com/jcustenborder/kafka-connect-archtype).
