@@ -1,4 +1,4 @@
-name: Java Unit tests CI
+name: Jacoco Unit tests CI
 
 on:
   push:
@@ -16,5 +16,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Build with Maven
-        run: mvn -B test --file pom.xml
+      - name: Build Jacoco report
+        run: mvn clean jacoco:prepare-agent install jacoco:report
+      - name: publish report
+        run: bash <(curl -s https://codecov.io/bash) # Upload to Codecov
