@@ -1,4 +1,5 @@
 [![Java CI with Maven](https://github.com/felipegutierrez/kafka-connector-github-source/actions/workflows/maven.yml/badge.svg)](https://github.com/felipegutierrez/kafka-connector-github-source/actions/workflows/maven.yml)
+[![Java Unit tests CI](https://github.com/felipegutierrez/kafka-connector-github-source/actions/workflows/test.yml/badge.svg)](https://github.com/felipegutierrez/kafka-connector-github-source/actions/workflows/test.yml)
 
 # GitHub source connector to Kafka
 
