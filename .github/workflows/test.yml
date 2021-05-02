@@ -17,6 +17,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Build Jacoco report
-        run: mvn clean jacoco:prepare-agent install jacoco:report
+        run: mvn clean jacoco:prepare-agent install jacoco:report -Dmaven.javadoc.skip=true
       - name: publish report
         run: bash <(curl -s https://codecov.io/bash) # Upload to Codecov
